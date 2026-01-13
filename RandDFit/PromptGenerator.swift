@@ -1,5 +1,5 @@
 //
-//  promptgenerator.swift
+//  PromptGenerator.swift
 //  RandDFit
 //
 //  Created by Logan Carter on 1/9/26.
@@ -83,8 +83,8 @@ struct PromptGenerator {
 
         let title: String = template.unit == .reps ? "\(amount) \(template.name)" : "\(amount)s \(template.name)"
         let mainLine: String = template.unit == .reps
-            ? "Do \(amount) \(template.name.lowercased())."
-            : "Do \(template.name.lowercased()) for \(amount) seconds."
+        ? "Do \(amount) \(template.name.lowercased())."
+        : "Do \(template.name.lowercased()) for \(amount) seconds."
 
         var steps: [String] = [mainLine, template.formCue]
         if beginnerFriendly, let easier = template.easierOption {
@@ -112,3 +112,4 @@ struct PromptGenerator {
         return base
     }
 }
+

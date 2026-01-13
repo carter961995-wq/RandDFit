@@ -5,13 +5,11 @@
 //  Created by Logan Carter on 1/9/26.
 //
 
-import Testing
+import XCTest
 @testable import RandDFit
 
-struct RandDFitTests {
-
-    @Test func example() async throws {
-        // Write your test here and use APIs like `#expect(...)` to check expected conditions.
+final class RandDFitTests: XCTestCase {
+    func testExample() throws {
+        XCTAssertTrue(true)
     }
-
 }

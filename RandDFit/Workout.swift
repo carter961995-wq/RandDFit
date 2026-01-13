@@ -1,5 +1,5 @@
 //
-//  workout.swift
+//  Workout.swift
 //  RandDFit
 //
 //  Created by Logan Carter on 1/9/26.
@@ -32,3 +32,4 @@ struct Workout: Identifiable, Codable, Equatable {
         self.steps = steps
     }
 }
+

@@ -1,5 +1,5 @@
 //
-//  notificationmanager.swift
+//  NotificationManager.swift
 //  RandDFit
 //
 //  Created by Logan Carter on 1/9/26.
@@ -21,15 +21,17 @@ final class NotificationManager {
         }
     }
 
-    func scheduleRandomPrompts(days: Int = 14,
-                               promptsPerDay: Int = 4,
-                               startHour: Int = 6,
-                               endHour: Int = 19,
-                               soundFileName: String = "dingding.caf",
-                               allowedDifficulties: Set<Difficulty>,
-                               beginnerFriendly: Bool) async {
+    func scheduleRandomPrompts(
+        days: Int = 14,
+        promptsPerDay: Int = 4,
+        startHour: Int = 6,
+        endHour: Int = 19,
+        soundFileName: String? = nil,
+        allowedDifficulties: Set<Difficulty>,
+        beginnerFriendly: Bool
+    ) async {
         let center = UNUserNotificationCenter.current()
-        await center.removeAllPendingNotificationRequests() 
+        center.removeAllPendingNotificationRequests()
 
         let calendar = Calendar.current
         let now = Date()
@@ -64,16 +66,18 @@ final class NotificationManager {
                 let content = UNMutableNotificationContent()
                 content.title = "RandFit — Round Bell"
                 content.body = "Ding-ding: \(prompt)"
-                if let soundName = UNNotificationSoundName(rawValue: soundFileName) {
-                    content.sound = UNNotificationSound(named: soundName)
+                if let soundFileName {
+                    content.sound = UNNotificationSound(named: UNNotificationSoundName(rawValue: soundFileName))
+                } else {
+                    content.sound = .default
                 }
-                
-                let triggerDate = calendar.dateComponents([.year,.month,.day,.hour,.minute,.second], from: t)
+
+                let triggerDate = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: t)
                 let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
-                
+
                 let request = UNNotificationRequest(identifier: "randfit_\(idx)", content: content, trigger: trigger)
                 idx += 1
-                await center.add(request)
+                try? await center.add(request)
             }
         }
     }
@@ -90,3 +94,4 @@ final class NotificationManager {
         return picks.map { start.addingTimeInterval(TimeInterval($0 * 60)) }.sorted()
     }
 }
+
