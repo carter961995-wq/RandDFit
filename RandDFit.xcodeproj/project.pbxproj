@@ -23,29 +23,44 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXBuildFile section */
+		AA1111111111111111111111 /* RandDFitApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000001 /* RandDFitApp.swift */; };
+		AA1111111111111111111112 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000002 /* ContentView.swift */; };
+		AA1111111111111111111113 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000003 /* AppState.swift */; };
+		AA1111111111111111111114 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000004 /* HomeView.swift */; };
+		AA1111111111111111111115 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000005 /* OnboardingView.swift */; };
+		AA1111111111111111111116 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000006 /* UserSettings.swift */; };
+		AA1111111111111111111117 /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000007 /* Workout.swift */; };
+		AA1111111111111111111118 /* PromptGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000008 /* PromptGenerator.swift */; };
+		AA1111111111111111111119 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000009 /* NotificationManager.swift */; };
+		AA1111111111111111111120 /* ExerciseKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000010 /* ExerciseKind.swift */; };
+		AA1111111111111111111121 /* ExerciseIllustrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000011 /* ExerciseIllustrationView.swift */; };
+		AA1111111111111111111130 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA00000000000000000000A0 /* Assets.xcassets */; };
+		AA1111111111111111111140 /* RandDFitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000000000000000000B0 /* RandDFitTests.swift */; };
+		AA1111111111111111111150 /* RandDFitUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000000000000000000C0 /* RandDFitUITests.swift */; };
+		AA1111111111111111111151 /* RandDFitUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000000000000000000C1 /* RandDFitUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		5979EF8D2F11B955005FE7F7 /* RandDFit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RandDFit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5979EF9C2F11B957005FE7F7 /* RandDFitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RandDFitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5979EFA62F11B957005FE7F7 /* RandDFitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RandDFitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA0000000000000000000001 /* RandDFitApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandDFitApp.swift; sourceTree = "<group>"; };
+		AA0000000000000000000002 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		AA0000000000000000000003 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		AA0000000000000000000004 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		AA0000000000000000000005 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		AA0000000000000000000006 /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
+		AA0000000000000000000007 /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
+		AA0000000000000000000008 /* PromptGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptGenerator.swift; sourceTree = "<group>"; };
+		AA0000000000000000000009 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		AA0000000000000000000010 /* ExerciseKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseKind.swift; sourceTree = "<group>"; };
+		AA0000000000000000000011 /* ExerciseIllustrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseIllustrationView.swift; sourceTree = "<group>"; };
+		AA00000000000000000000A0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		AA00000000000000000000B0 /* RandDFitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandDFitTests.swift; sourceTree = "<group>"; };
+		AA00000000000000000000C0 /* RandDFitUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandDFitUITests.swift; sourceTree = "<group>"; };
+		AA00000000000000000000C1 /* RandDFitUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandDFitUITestsLaunchTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		5979EF8F2F11B955005FE7F7 /* RandDFit */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = RandDFit;
-			sourceTree = "<group>";
-		};
-		5979EF9F2F11B957005FE7F7 /* RandDFitTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = RandDFitTests;
-			sourceTree = "<group>";
-		};
-		5979EFA92F11B957005FE7F7 /* RandDFitUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = RandDFitUITests;
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		5979EF8A2F11B955005FE7F7 /* Frameworks */ = {
@@ -75,11 +90,47 @@
 		5979EF842F11B955005FE7F7 = {
 			isa = PBXGroup;
 			children = (
-				5979EF8F2F11B955005FE7F7 /* RandDFit */,
-				5979EF9F2F11B957005FE7F7 /* RandDFitTests */,
-				5979EFA92F11B957005FE7F7 /* RandDFitUITests */,
+				AA0000000000000000000100 /* RandDFit */,
+				AA0000000000000000000200 /* RandDFitTests */,
+				AA0000000000000000000300 /* RandDFitUITests */,
 				5979EF8E2F11B955005FE7F7 /* Products */,
 			);
+			sourceTree = "<group>";
+		};
+		AA0000000000000000000100 /* RandDFit */ = {
+			isa = PBXGroup;
+			children = (
+				AA00000000000000000000A0 /* Assets.xcassets */,
+				AA0000000000000000000003 /* AppState.swift */,
+				AA0000000000000000000002 /* ContentView.swift */,
+				AA0000000000000000000011 /* ExerciseIllustrationView.swift */,
+				AA0000000000000000000010 /* ExerciseKind.swift */,
+				AA0000000000000000000004 /* HomeView.swift */,
+				AA0000000000000000000009 /* NotificationManager.swift */,
+				AA0000000000000000000005 /* OnboardingView.swift */,
+				AA0000000000000000000008 /* PromptGenerator.swift */,
+				AA0000000000000000000001 /* RandDFitApp.swift */,
+				AA0000000000000000000006 /* UserSettings.swift */,
+				AA0000000000000000000007 /* Workout.swift */,
+			);
+			path = RandDFit;
+			sourceTree = "<group>";
+		};
+		AA0000000000000000000200 /* RandDFitTests */ = {
+			isa = PBXGroup;
+			children = (
+				AA00000000000000000000B0 /* RandDFitTests.swift */,
+			);
+			path = RandDFitTests;
+			sourceTree = "<group>";
+		};
+		AA0000000000000000000300 /* RandDFitUITests */ = {
+			isa = PBXGroup;
+			children = (
+				AA00000000000000000000C0 /* RandDFitUITests.swift */,
+				AA00000000000000000000C1 /* RandDFitUITestsLaunchTests.swift */,
+			);
+			path = RandDFitUITests;
 			sourceTree = "<group>";
 		};
 		5979EF8E2F11B955005FE7F7 /* Products */ = {
@@ -108,7 +159,6 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				5979EF8F2F11B955005FE7F7 /* RandDFit */,
 			);
 			name = RandDFit;
 			packageProductDependencies = (
@@ -131,7 +181,6 @@
 				5979EF9E2F11B957005FE7F7 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				5979EF9F2F11B957005FE7F7 /* RandDFitTests */,
 			);
 			name = RandDFitTests;
 			packageProductDependencies = (
@@ -154,7 +203,6 @@
 				5979EFA82F11B957005FE7F7 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				5979EFA92F11B957005FE7F7 /* RandDFitUITests */,
 			);
 			name = RandDFitUITests;
 			packageProductDependencies = (
@@ -212,6 +260,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA1111111111111111111130 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,6 +285,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA1111111111111111111111 /* RandDFitApp.swift in Sources */,
+				AA1111111111111111111112 /* ContentView.swift in Sources */,
+				AA1111111111111111111113 /* AppState.swift in Sources */,
+				AA1111111111111111111114 /* HomeView.swift in Sources */,
+				AA1111111111111111111115 /* OnboardingView.swift in Sources */,
+				AA1111111111111111111116 /* UserSettings.swift in Sources */,
+				AA1111111111111111111117 /* Workout.swift in Sources */,
+				AA1111111111111111111118 /* PromptGenerator.swift in Sources */,
+				AA1111111111111111111119 /* NotificationManager.swift in Sources */,
+				AA1111111111111111111120 /* ExerciseKind.swift in Sources */,
+				AA1111111111111111111121 /* ExerciseIllustrationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,6 +303,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA1111111111111111111140 /* RandDFitTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,6 +311,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA1111111111111111111150 /* RandDFitUITests.swift in Sources */,
+				AA1111111111111111111151 /* RandDFitUITestsLaunchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
