@@ -1,0 +1,16 @@
+project "RandDFit.xcodeproj"
+scheme "RandDFit"
+
+languages(["en-US"])
+
+# Pick devices that App Store Connect currently accepts for your iOS deployment target.
+# Adjust based on what simulators you have installed.
+devices([
+  "iPhone 15 Pro",
+  "iPhone 15 Pro Max",
+  "iPad Pro (12.9-inch) (6th generation)"
+])
+
+clear_previous_screenshots(true)
+reinstall_app(true)
+

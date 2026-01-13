@@ -32,6 +32,19 @@ final class RandDFitUITests: XCTestCase {
     }
 
     @MainActor
+    func testAppStoreScreenshots() throws {
+        let app = XCUIApplication()
+        app.launchArguments = ["-ui_testing", "-reset_defaults"]
+        setupSnapshot(app)
+        app.launch()
+
+        snapshot("01_Workout")
+
+        app.tabBars.buttons["Settings"].tap()
+        snapshot("02_Settings")
+    }
+
+    @MainActor
     func testLaunchPerformance() throws {
         // This measures how long it takes to launch your application.
         measure(metrics: [XCTApplicationLaunchMetric()]) {

@@ -1,10 +1,3 @@
-//
-//  notificationmanager.swift
-//  RandDFit
-//
-//  Created by Logan Carter on 1/9/26.
-//
-
 import Foundation
 import UserNotifications
 
@@ -21,22 +14,23 @@ final class NotificationManager {
         }
     }
 
-    func scheduleRandomPrompts(days: Int = 14,
-                               promptsPerDay: Int = 4,
-                               startHour: Int = 6,
-                               endHour: Int = 19,
-                               soundFileName: String = "dingding.caf",
-                               allowedDifficulties: Set<Difficulty>,
-                               beginnerFriendly: Bool) async {
+    func scheduleRandomPrompts(
+        days: Int = 14,
+        promptsPerDay: Int = 4,
+        startHour: Int = 6,
+        endHour: Int = 19,
+        allowedDifficulties: Set<Difficulty>,
+        beginnerFriendly: Bool
+    ) async {
         let center = UNUserNotificationCenter.current()
-        await center.removeAllPendingNotificationRequests() 
+        center.removeAllPendingNotificationRequests()
 
         let calendar = Calendar.current
         let now = Date()
 
         var idx = 0
 
-        for dayOffset in 0..<days {
+        for dayOffset in 0..<max(0, days) {
             guard let dayDate = calendar.date(byAdding: .day, value: dayOffset, to: now) else { continue }
 
             var startC = calendar.dateComponents([.year, .month, .day], from: dayDate)
@@ -49,13 +43,12 @@ final class NotificationManager {
 
             guard let windowStart = calendar.date(from: startC),
                   let windowEnd = calendar.date(from: endC),
-                  windowEnd > windowStart else { continue }
+                  windowEnd > windowStart
+            else { continue }
 
             let times = uniqueRandomTimes(count: promptsPerDay, start: windowStart, end: windowEnd)
 
-            for t in times {
-                if t <= now { continue }
-
+            for t in times where t > now {
                 let prompt = PromptGenerator.promptLine(
                     allowedDifficulties: allowedDifficulties,
                     beginnerFriendly: beginnerFriendly
@@ -64,16 +57,23 @@ final class NotificationManager {
                 let content = UNMutableNotificationContent()
                 content.title = "RandFit — Round Bell"
                 content.body = "Ding-ding: \(prompt)"
-                if let soundName = UNNotificationSoundName(rawValue: soundFileName) {
-                    content.sound = UNNotificationSound(named: soundName)
-                }
-                
-                let triggerDate = calendar.dateComponents([.year,.month,.day,.hour,.minute,.second], from: t)
+                content.sound = .default
+
+                let triggerDate = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: t)
                 let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
-                
-                let request = UNNotificationRequest(identifier: "randfit_\(idx)", content: content, trigger: trigger)
+
+                let request = UNNotificationRequest(
+                    identifier: "randfit_\(idx)",
+                    content: content,
+                    trigger: trigger
+                )
                 idx += 1
-                await center.add(request)
+
+                do {
+                    try await center.add(request)
+                } catch {
+                    // Ignore individual scheduling failures; user can re-run scheduling from Settings.
+                }
             }
         }
     }
@@ -90,3 +90,4 @@ final class NotificationManager {
         return picks.map { start.addingTimeInterval(TimeInterval($0 * 60)) }.sorted()
     }
 }
+
