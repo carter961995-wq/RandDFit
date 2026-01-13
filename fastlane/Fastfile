@@ -1,0 +1,9 @@
+default_platform(:ios)
+
+platform :ios do
+  desc "Capture App Store screenshots (fastlane snapshot)"
+  lane :screenshots do
+    capture_screenshots
+  end
+end
+

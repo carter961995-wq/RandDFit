@@ -6,27 +6,27 @@
 //
 
 import SwiftUI
-import SwiftData
 
 @main
 struct RandDFitApp: App {
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            Item.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+    @StateObject private var appState = AppState()
+    @StateObject private var settings = UserSettings()
 
-        do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
+    init() {
+        let args = ProcessInfo.processInfo.arguments
+        if args.contains("-reset_defaults") {
+            let defaults = UserDefaults.standard
+            for key in ["hasOnboarded", "difficultyCSV", "promptsPerDay", "startHour", "endHour", "beginnerFriendly"] {
+                defaults.removeObject(forKey: key)
+            }
         }
-    }()
+    }
 
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(appState)
+                .environmentObject(settings)
         }
-        .modelContainer(sharedModelContainer)
     }
 }
