@@ -15,6 +15,7 @@ final class AppState: ObservableObject {
         minutes: 1,
         difficulty: .easy,
         equipment: .none,
+        exerciseKind: .pushUps,
         steps: []
     )
 

@@ -79,6 +79,10 @@ struct HomeView: View {
                     .background(.thinMaterial, in: Capsule())
             }
 
+            if shouldShowIllustration {
+                ExerciseIllustrationView(kind: appState.currentWorkout.exerciseKind)
+            }
+
             Divider()
 
             VStack(alignment: .leading, spacing: 6) {
@@ -91,6 +95,10 @@ struct HomeView: View {
         .padding()
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+    }
+
+    private var shouldShowIllustration: Bool {
+        settings.beginnerFriendly || appState.currentWorkout.difficulty == .easy
     }
 
     private func rescheduleNotifications() async {
