@@ -1,10 +1,3 @@
-//
-//  workout.swift
-//  RandDFit
-//
-//  Created by Logan Carter on 1/9/26.
-//
-
 import Foundation
 
 enum Difficulty: String, CaseIterable, Codable, Hashable {
@@ -32,3 +25,4 @@ struct Workout: Identifiable, Codable, Equatable {
         self.steps = steps
     }
 }
+

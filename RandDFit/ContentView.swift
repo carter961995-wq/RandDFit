@@ -6,50 +6,87 @@
 //
 
 import SwiftUI
-import SwiftData
 
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
+    @EnvironmentObject private var settings: UserSettings
+    @EnvironmentObject private var appState: AppState
+
+    @State private var showingSettings = false
 
     var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+        NavigationStack {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 16) {
+                    Text(appState.currentWorkout.title)
+                        .font(.largeTitle.bold())
+
+                    HStack(spacing: 10) {
+                        Text(appState.currentWorkout.difficulty.rawValue.capitalized)
+                            .font(.caption.weight(.semibold))
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 6)
+                            .background(.thinMaterial)
+                            .clipShape(Capsule())
+
+                        Text("~\(appState.currentWorkout.minutes) min")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+
+                    if appState.currentWorkout.steps.isEmpty {
+                        Text("Tap ✅ to generate your first prompt.")
+                            .foregroundStyle(.secondary)
+                    } else {
+                        VStack(alignment: .leading, spacing: 10) {
+                            ForEach(appState.currentWorkout.steps, id: \.self) { step in
+                                HStack(alignment: .top, spacing: 10) {
+                                    Text("•")
+                                    Text(step)
+                                }
+                            }
+                        }
+                        .font(.body)
+                    }
+
+                    Spacer(minLength: 12)
+
+                    HStack(spacing: 12) {
+                        Button {
+                            appState.markDone(using: settings)
+                        } label: {
+                            Label("Done", systemImage: "checkmark.circle.fill")
+                                .frame(maxWidth: .infinity)
+                        }
+                        .buttonStyle(.borderedProminent)
+
+                        Button {
+                            appState.generateWorkout(using: settings)
+                        } label: {
+                            Label("Shuffle", systemImage: "shuffle")
+                                .frame(maxWidth: .infinity)
+                        }
+                        .buttonStyle(.bordered)
                     }
                 }
-                .onDelete(perform: deleteItems)
+                .padding()
             }
+            .navigationTitle("RandFit")
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        showingSettings = true
+                    } label: {
+                        Image(systemName: "gear")
                     }
                 }
             }
-        } detail: {
-            Text("Select an item")
+            .sheet(isPresented: $showingSettings) {
+                SettingsView()
+            }
         }
-    }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
+        .task {
+            if appState.currentWorkout.steps.isEmpty {
+                appState.generateWorkout(using: settings)
             }
         }
     }
@@ -57,5 +94,6 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
+        .environmentObject(UserSettings())
+        .environmentObject(AppState())
 }

@@ -1,10 +1,3 @@
-//
-//  promptgenerator.swift
-//  RandDFit
-//
-//  Created by Logan Carter on 1/9/26.
-//
-
 import Foundation
 
 enum PromptUnit: String, Codable {
@@ -112,3 +105,4 @@ struct PromptGenerator {
         return base
     }
 }
+

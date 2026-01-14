@@ -1,23 +1,15 @@
-//
-//  usersettings.swift
-//  RandDFit
-//
-//  Created by Logan Carter on 1/9/26.
-//
-
-import Foundation
 import SwiftUI
-import Combine
 
+@MainActor
 final class UserSettings: ObservableObject {
     @AppStorage("hasOnboarded") var hasOnboarded: Bool = false
-    
+
     @AppStorage("difficultyCSV") private var difficultyCSV: String = "easy,moderate"
     @AppStorage("promptsPerDay") var promptsPerDay: Int = 4
     @AppStorage("startHour") var startHour: Int = 6
     @AppStorage("endHour") var endHour: Int = 19
     @AppStorage("beginnerFriendly") var beginnerFriendly: Bool = true
-    
+
     var allowedDifficulties: Set<Difficulty> {
         get {
             let parts = difficultyCSV.split(separator: ",").map { String($0) }
@@ -29,5 +21,19 @@ final class UserSettings: ObservableObject {
             difficultyCSV = csv.isEmpty ? "easy,moderate,hard" : csv
         }
     }
-    
+
+    func isDifficultyEnabled(_ difficulty: Difficulty) -> Bool {
+        allowedDifficulties.contains(difficulty)
+    }
+
+    func setDifficulty(_ difficulty: Difficulty, enabled: Bool) {
+        var set = allowedDifficulties
+        if enabled {
+            set.insert(difficulty)
+        } else {
+            set.remove(difficulty)
+        }
+        allowedDifficulties = set
+    }
 }
+
