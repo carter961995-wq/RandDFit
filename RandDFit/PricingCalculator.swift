@@ -34,7 +34,10 @@ enum PricingCalculator {
 
     static func totalPriceCents(base: Int, addons: [AddonLineItem], laborCents: Int, markupPercent: Double, taxPercent: Double) -> Int {
         let addonsCents = addons.reduce(0) { partial, item in
-            partial + (item.contractorCost.amountCents * max(1, item.quantity))
+            let perUnit = item.contractorCost.amountCents > 0
+                ? item.contractorCost.amountCents
+                : (item.nationalAvgPlaceholder?.amountCents ?? 0)
+            return partial + (perUnit * max(1, item.quantity))
         }
         let subtotal = max(0, base) + max(0, addonsCents) + max(0, laborCents)
         let withMarkup = Double(subtotal) * (1.0 + max(0, markupPercent) / 100.0)
