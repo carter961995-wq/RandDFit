@@ -10,9 +10,12 @@ import SwiftData
 
 @main
 struct RandDFitApp: App {
+    @StateObject private var settings = Gate2GoSettings()
+
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            Item.self,
+            ProjectModel.self,
+            GateDesignModel.self,
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
@@ -26,6 +29,7 @@ struct RandDFitApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(settings)
         }
         .modelContainer(sharedModelContainer)
     }
