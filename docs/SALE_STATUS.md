@@ -4,19 +4,21 @@
 
 - App draft ID: **14528677**.
 - Live product: RanDoFit, App Store ID 6757726061.
-- Asking price: **US$1,499**, classified format with negotiation above or below the asking price.
+- Asking price: **US$799**, classified format with negotiation above or below the asking price. The revised price and description were saved and independently verified in the unpublished Flippa preview.
 - Revenue disclosure: **$0**, owner-reported very low downloads. Exact downloads and expenses left unverified; no fabricated monthly P&L was entered.
 - Scope: app transfer subject to Apple requirements, RanDoFit source/artwork/branding, privacy/support files and handover documentation.
-- Description includes an optional SafeRestore bundle, with separate scope and price. SafeRestore is not included in the $1,499 price.
+- Description includes an optional SafeRestore bundle, with separate scope and price. SafeRestore is not included in the $799 price.
 - No fixed post-sale support commitment was selected; any transition support is to be negotiated.
 - The summary and full description were saved and the pricing step completed. The basic Entry package selection is saved, and checkout displays a total of $29. No optional extras are selected.
 - Flippa requires an ownership code to be added to the app's promotional text or copyright field in App Store Connect, then checked with Verify Now. This is pending Apple sign-in.
 
-**The listing remains a draft. No payment or ownership transfer was made.**
+**The listing remains a draft. No offers were accepted, and no payment or ownership transfer was made.**
+
+The $799 asking price is a strategy for a faster sale of a pre-revenue app with very low downloads. It is not an appraisal or a guarantee of the eventual sale price. SafeRestore remains a separate negotiation.
 
 ## Fees observed
 
-Flippa's Entry package was displayed at **$29 flat for 60 days**. Published pricing states a **10% success fee** for this price tier. At a $1,499 sale, $1,499 − $149.90 − $29 = **$1,320.10**, before other transaction fees or taxes. Actual checkout and any relisting terms must be reviewed before charging.
+Flippa's Entry package was displayed at **$29 flat for 60 days**. Published pricing states a **10% success fee** for this price tier. At a $799 sale, $799 − $79.90 − $29 = **$690.10**, before other transaction fees or taxes. Actual checkout and any relisting terms must be reviewed before charging.
 
 Source: https://flippa.com/pricing
 
@@ -34,7 +36,7 @@ Flippa requires original apps with all necessary source code. The repaired sourc
 
 **Summary:** Live iOS workout app with SwiftUI source, exercise illustrations and local reminders. Pre-revenue asset; offers welcome. Optional SafeRestore bundle.
 
-The updated full description was saved and verified in the Flippa preview. It covers the app's local workout/reminder features, included source and artwork, zero revenue and low downloads, a negotiable $1,499 asking price, and the optional separately priced SafeRestore package. It records the completed repair merge and successful simulator build/ten-test validation, confirms that no App Store release was submitted, and discloses the unmatched original archive and untested proposed iOS 16 compatibility. Apple verification and Pages activation remain pending. It makes no claim of existing monetization, verified retention or guaranteed earnings.
+The updated full description was saved and verified in the Flippa preview. It covers the app's local workout/reminder features, included source and artwork, zero revenue and low downloads, a negotiable $799 asking price, and the optional separately priced SafeRestore package. It records the completed repair merge and successful simulator build/ten-test validation, confirms that no App Store release was submitted, and discloses the unmatched original archive and untested proposed iOS 16 compatibility. Apple verification and Pages activation remain pending. It makes no claim of existing monetization, verified retention or guaranteed earnings.
 
 ## Continuation links
 
