@@ -1,10 +1,4 @@
-//
-//  OnboardingView.swift
-//  RandDFit
-//
-//  Created by Logan Carter on 1/9/26.
-//
-
+import Foundation
 import SwiftUI
 
 struct OnboardingView: View {
@@ -12,8 +6,8 @@ struct OnboardingView: View {
     @EnvironmentObject private var appState: AppState
 
     @State private var isRequestingNotifications = false
-    @State private var notificationEnabled: Bool? = nil
-    @State private var errorMessage: String? = nil
+    @State private var scheduleStatus: String?
+    @State private var errorMessage: String?
 
     private var isTimeWindowValid: Bool {
         settings.endHour > settings.startHour
@@ -24,10 +18,10 @@ struct OnboardingView: View {
             Form {
                 Section {
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("RandDFit")
+                        Text("RanDoFit")
                             .font(.title2)
                             .bold()
-                        Text("Random 1‑minute workouts + optional notifications.")
+                        Text("Short, random workouts with optional reminders.")
                             .foregroundStyle(.secondary)
                     }
                     .padding(.vertical, 4)
@@ -38,13 +32,12 @@ struct OnboardingView: View {
                     difficultyToggleRow(.moderate, label: "Moderate")
                     difficultyToggleRow(.hard, label: "Hard")
 
-                    if settings.allowedDifficulties.isEmpty {
-                        Text("Pick at least one difficulty.")
-                            .foregroundStyle(.red)
-                    }
+                    Text("Keep at least one difficulty selected.")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
                 }
 
-                Section("Notifications") {
+                Section("Reminders") {
                     Stepper("Prompts per day: \(settings.promptsPerDay)", value: $settings.promptsPerDay, in: 1...12)
                     Stepper("Start hour: \(settings.startHour):00", value: $settings.startHour, in: 0...23)
                     Stepper("End hour: \(settings.endHour):00", value: $settings.endHour, in: 0...23)
@@ -66,18 +59,22 @@ struct OnboardingView: View {
                                 Text("Enable & schedule prompts")
                             }
                         }
-                        .disabled(isRequestingNotifications || !isTimeWindowValid)
+                        .disabled(!isTimeWindowValid)
                         Spacer()
                     }
 
-                    if let notificationEnabled {
-                        Text(notificationEnabled ? "Notifications enabled." : "Notifications not enabled.")
-                            .foregroundStyle(notificationEnabled ? .green : .secondary)
+                    if let scheduleStatus {
+                        Text(scheduleStatus)
+                            .foregroundStyle(.secondary)
                     }
                     if let errorMessage {
                         Text(errorMessage)
                             .foregroundStyle(.red)
                     }
+
+                    Text("Changing preferences does not change existing reminders until you schedule again.")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
                 }
 
                 Section {
@@ -88,60 +85,63 @@ struct OnboardingView: View {
                         Text("Continue")
                             .frame(maxWidth: .infinity)
                     }
-                    .disabled(settings.allowedDifficulties.isEmpty)
+                    .accessibilityIdentifier("continue_button")
                 }
             }
+            .disabled(isRequestingNotifications)
             .navigationTitle("Get started")
         }
     }
 
-    @ViewBuilder
     private func difficultyToggleRow(_ difficulty: Difficulty, label: String) -> some View {
-        Button {
-            toggleDifficulty(difficulty)
+        let isSelected = settings.allowedDifficulties.contains(difficulty)
+        let isLastSelection = isSelected && settings.allowedDifficulties.count == 1
+
+        return Button {
+            var selected = settings.allowedDifficulties
+            if selected.contains(difficulty) {
+                selected.remove(difficulty)
+            } else {
+                selected.insert(difficulty)
+            }
+            settings.allowedDifficulties = selected
         } label: {
             HStack {
                 Text(label)
                 Spacer()
-                Image(systemName: settings.allowedDifficulties.contains(difficulty) ? "checkmark.circle.fill" : "circle")
-                    .foregroundStyle(settings.allowedDifficulties.contains(difficulty) ? .tint : .secondary)
+                Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
+                    .foregroundStyle(isSelected ? Color.accentColor : Color.secondary)
             }
         }
         .buttonStyle(.plain)
-    }
-
-    private func toggleDifficulty(_ difficulty: Difficulty) {
-        var set = settings.allowedDifficulties
-        if set.contains(difficulty) {
-            set.remove(difficulty)
-        } else {
-            set.insert(difficulty)
-        }
-        settings.allowedDifficulties = set
+        .disabled(isLastSelection)
+        .accessibilityValue(isSelected ? "Selected" : "Not selected")
     }
 
     private func enableAndScheduleNotifications() async {
+        guard !isRequestingNotifications, isTimeWindowValid else { return }
         errorMessage = nil
+        scheduleStatus = nil
         isRequestingNotifications = true
         defer { isRequestingNotifications = false }
 
-        guard isTimeWindowValid else { return }
-
-        let ok = await NotificationManager.shared.requestAuthorization()
-        notificationEnabled = ok
-
-        guard ok else {
-            errorMessage = "Permission denied. You can enable notifications in Settings."
+        let authorized = await NotificationManager.shared.requestAuthorization()
+        guard authorized else {
+            errorMessage = ReminderScheduleError.notificationsDisabled.localizedDescription
             return
         }
 
-        await NotificationManager.shared.scheduleRandomPrompts(
-            promptsPerDay: settings.promptsPerDay,
-            startHour: settings.startHour,
-            endHour: settings.endHour,
-            allowedDifficulties: settings.allowedDifficulties,
-            beginnerFriendly: settings.beginnerFriendly
-        )
+        do {
+            let result = try await NotificationManager.shared.scheduleRandomPrompts(
+                promptsPerDay: settings.promptsPerDay,
+                startHour: settings.startHour,
+                endHour: settings.endHour,
+                allowedDifficulties: settings.allowedDifficulties,
+                beginnerFriendly: settings.beginnerFriendly
+            )
+            scheduleStatus = result.summary
+        } catch {
+            errorMessage = error.localizedDescription
+        }
     }
 }
-

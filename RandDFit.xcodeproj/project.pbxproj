@@ -36,6 +36,7 @@
 		AA1111111111111111111120 /* ExerciseKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000010 /* ExerciseKind.swift */; };
 		AA1111111111111111111121 /* ExerciseIllustrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000011 /* ExerciseIllustrationView.swift */; };
 		AA1111111111111111111130 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA00000000000000000000A0 /* Assets.xcassets */; };
+		AA1111111111111111111131 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = AA00000000000000000000A1 /* PrivacyInfo.xcprivacy */; };
 		AA1111111111111111111140 /* RandDFitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000000000000000000B0 /* RandDFitTests.swift */; };
 		AA1111111111111111111150 /* RandDFitUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000000000000000000C0 /* RandDFitUITests.swift */; };
 		AA1111111111111111111151 /* RandDFitUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000000000000000000C1 /* RandDFitUITestsLaunchTests.swift */; };
@@ -57,6 +58,7 @@
 		AA0000000000000000000010 /* ExerciseKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseKind.swift; sourceTree = "<group>"; };
 		AA0000000000000000000011 /* ExerciseIllustrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseIllustrationView.swift; sourceTree = "<group>"; };
 		AA00000000000000000000A0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		AA00000000000000000000A1 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		AA00000000000000000000B0 /* RandDFitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandDFitTests.swift; sourceTree = "<group>"; };
 		AA00000000000000000000C0 /* RandDFitUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandDFitUITests.swift; sourceTree = "<group>"; };
 		AA00000000000000000000C1 /* RandDFitUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandDFitUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				AA00000000000000000000A0 /* Assets.xcassets */,
+				AA00000000000000000000A1 /* PrivacyInfo.xcprivacy */,
 				AA0000000000000000000003 /* AppState.swift */,
 				AA0000000000000000000002 /* ContentView.swift */,
 				AA0000000000000000000011 /* ExerciseIllustrationView.swift */,
@@ -261,6 +264,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA1111111111111111111130 /* Assets.xcassets in Resources */,
+				AA1111111111111111111131 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

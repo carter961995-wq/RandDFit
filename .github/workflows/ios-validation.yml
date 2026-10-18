@@ -1,0 +1,54 @@
+name: iOS validation
+on:
+  push:
+    branches: ["sale/repair-2026-10-17", "app-setup"]
+  pull_request:
+    branches: ["app-setup"]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ios-validation-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build-and-test:
+    runs-on: macos-latest
+    timeout-minutes: 25
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Show toolchain
+        run: xcodebuild -version
+      - name: Build simulator app
+        run: |
+          set -o pipefail
+          xcodebuild -project RandDFit.xcodeproj -scheme RandDFit -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' -derivedDataPath build CODE_SIGNING_ALLOWED=NO build 2>&1 | tee build.log
+      - name: Select available iPhone simulator
+        id: simulator
+        run: |
+          python3 - <<'PY'
+          import json, os, subprocess
+          devices = json.loads(subprocess.check_output(["xcrun", "simctl", "list", "devices", "available", "-j"]))["devices"]
+          candidates = [d for runtime, group in devices.items() if ".iOS-" in runtime for d in group if d["name"].startswith("iPhone") and d.get("isAvailable", False)]
+          if not candidates:
+              raise SystemExit("No available iPhone simulator runtime.")
+          with open(os.environ["GITHUB_OUTPUT"], "a") as output:
+              output.write("udid=" + candidates[-1]["udid"] + "\n")
+          PY
+      - name: Run focused unit tests
+        run: |
+          set -o pipefail
+          xcodebuild -project RandDFit.xcodeproj -scheme RandDFit -configuration Debug -destination 'platform=iOS Simulator,id=${{ steps.simulator.outputs.udid }}' -derivedDataPath build -resultBundlePath TestResults.xcresult -only-testing:RandDFitTests CODE_SIGNING_ALLOWED=NO test 2>&1 | tee test.log
+      - name: Save validation logs
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: ios-validation
+          path: |
+            build.log
+            test.log
+            TestResults.xcresult
+          if-no-files-found: ignore
+          retention-days: 7

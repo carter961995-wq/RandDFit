@@ -71,7 +71,7 @@ struct PromptGenerator {
     ]
 
     static func makeWorkout(allowedDifficulties: Set<Difficulty>, beginnerFriendly: Bool) -> Workout {
-        let difficulty = allowedDifficulties.randomElement() ?? .moderate
+        let difficulty = allowedDifficulties.randomElement() ?? .easy
         let template = templates.randomElement() ?? templates[0]
 
         let amount: Int = {
@@ -91,13 +91,13 @@ struct PromptGenerator {
         if beginnerFriendly, let easier = template.easierOption {
             steps.append("Beginner option: \(easier).")
         }
-        steps.append("Done? Tap ✅ for the next one.")
+        steps.append("Done? Tap Next workout for another prompt.")
 
         return Workout(title: title, minutes: 1, difficulty: difficulty, equipment: .none, exerciseKind: template.kind, steps: steps)
     }
 
     static func promptLine(allowedDifficulties: Set<Difficulty>, beginnerFriendly: Bool) -> String {
-        let difficulty = allowedDifficulties.randomElement() ?? .moderate
+        let difficulty = allowedDifficulties.randomElement() ?? .easy
         let template = templates.randomElement() ?? templates[0]
         let amount: Int = {
             switch difficulty {
@@ -113,4 +113,3 @@ struct PromptGenerator {
         return base
     }
 }
-

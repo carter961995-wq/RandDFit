@@ -150,6 +150,11 @@ def make_icon(mode: str, size: int = 1024) -> Image.Image:
         v.putalpha(Image.eval(vignette, lambda a: 255 - a))
         icon.alpha_composite(v)
 
+    if mode == "light":
+        # The default App Store image must be opaque. Preserve the native artwork
+        # by compositing its translucent strokes over the original gradient.
+        return Image.alpha_composite(base, icon).convert("RGB")
+
     return icon
 
 
@@ -170,4 +175,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

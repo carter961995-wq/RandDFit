@@ -1,64 +1,69 @@
-//
-//  HomeView.swift
-//  RandDFit
-//
-//  Created by Logan Carter on 1/9/26.
-//
-
+import Foundation
 import SwiftUI
 
 struct HomeView: View {
     @EnvironmentObject private var settings: UserSettings
     @EnvironmentObject private var appState: AppState
 
-    @State private var isScheduling = false
-    @State private var scheduleStatus: String? = nil
+    @State private var isUpdatingReminders = false
+    @State private var scheduleStatus: String?
 
     var body: some View {
         NavigationStack {
-            VStack(spacing: 16) {
-                workoutCard
+            ScrollView {
+                VStack(spacing: 16) {
+                    workoutCard
 
-                Button {
-                    appState.markDone(using: settings)
-                } label: {
-                    Label("Next workout", systemImage: "checkmark.circle")
-                        .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.borderedProminent)
-
-                Button {
-                    Task { await rescheduleNotifications() }
-                } label: {
-                    if isScheduling {
-                        ProgressView()
-                    } else {
-                        Label("Reschedule notifications", systemImage: "bell.badge")
+                    Button {
+                        appState.markDone(using: settings)
+                    } label: {
+                        Label("Next workout", systemImage: "checkmark.circle")
+                            .frame(maxWidth: .infinity)
                     }
-                }
-                .buttonStyle(.bordered)
+                    .buttonStyle(.borderedProminent)
 
-                if let scheduleStatus {
-                    Text(scheduleStatus)
+                    Button {
+                        Task { await rescheduleNotifications() }
+                    } label: {
+                        if isUpdatingReminders {
+                            ProgressView()
+                        } else {
+                            Label("Reschedule reminders", systemImage: "bell.badge")
+                        }
+                    }
+                    .buttonStyle(.bordered)
+                    .disabled(isUpdatingReminders)
+
+                    Button("Clear scheduled reminders", role: .destructive) {
+                        Task { await clearReminders() }
+                    }
+                    .disabled(isUpdatingReminders)
+
+                    if let scheduleStatus {
+                        Text(scheduleStatus)
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
+                            .multilineTextAlignment(.center)
+                    }
+
+                    Text("Reminders cover a limited period. Reschedule them here to keep receiving prompts.")
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                         .multilineTextAlignment(.center)
-                        .padding(.horizontal)
                 }
-
-                Spacer(minLength: 0)
+                .padding()
             }
-            .padding()
-            .navigationTitle("RandDFit")
+            .navigationTitle("RanDoFit")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Reset") {
+                    Button("Settings") {
                         settings.hasOnboarded = false
                     }
+                    .disabled(isUpdatingReminders)
                 }
             }
             .onAppear {
-                if appState.currentWorkout.title == "Loading…" {
+                if appState.currentWorkout.steps.isEmpty {
                     appState.generateWorkout(using: settings)
                 }
             }
@@ -102,24 +107,42 @@ struct HomeView: View {
     }
 
     private func rescheduleNotifications() async {
+        guard !isUpdatingReminders else { return }
         scheduleStatus = nil
-        isScheduling = true
-        defer { isScheduling = false }
+        isUpdatingReminders = true
+        defer { isUpdatingReminders = false }
 
-        let ok = await NotificationManager.shared.requestAuthorization()
-        guard ok else {
-            scheduleStatus = "Notifications are not enabled (check iOS Settings)."
+        let authorized = await NotificationManager.shared.requestAuthorization()
+        guard authorized else {
+            scheduleStatus = ReminderScheduleError.notificationsDisabled.localizedDescription
             return
         }
 
-        await NotificationManager.shared.scheduleRandomPrompts(
-            promptsPerDay: settings.promptsPerDay,
-            startHour: settings.startHour,
-            endHour: settings.endHour,
-            allowedDifficulties: settings.allowedDifficulties,
-            beginnerFriendly: settings.beginnerFriendly
-        )
-        scheduleStatus = "Scheduled prompts for the next 14 days."
+        do {
+            let result = try await NotificationManager.shared.scheduleRandomPrompts(
+                promptsPerDay: settings.promptsPerDay,
+                startHour: settings.startHour,
+                endHour: settings.endHour,
+                allowedDifficulties: settings.allowedDifficulties,
+                beginnerFriendly: settings.beginnerFriendly
+            )
+            scheduleStatus = result.summary
+        } catch {
+            scheduleStatus = error.localizedDescription
+        }
+    }
+
+    private func clearReminders() async {
+        guard !isUpdatingReminders else { return }
+        scheduleStatus = nil
+        isUpdatingReminders = true
+        defer { isUpdatingReminders = false }
+
+        do {
+            try await NotificationManager.shared.clearScheduledPrompts()
+            scheduleStatus = "Cleared scheduled reminders."
+        } catch {
+            scheduleStatus = error.localizedDescription
+        }
     }
 }
-

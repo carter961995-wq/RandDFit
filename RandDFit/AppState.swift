@@ -20,12 +20,13 @@ final class AppState: ObservableObject {
     )
 
     func generateWorkout(using settings: UserSettings) {
-        let diffs = settings.allowedDifficulties.isEmpty ? Set(Difficulty.allCases) : settings.allowedDifficulties
-        currentWorkout = PromptGenerator.makeWorkout(allowedDifficulties: diffs, beginnerFriendly: settings.beginnerFriendly)
+        currentWorkout = PromptGenerator.makeWorkout(
+            allowedDifficulties: settings.allowedDifficulties,
+            beginnerFriendly: settings.beginnerFriendly
+        )
     }
 
     func markDone(using settings: UserSettings) {
         generateWorkout(using: settings)
     }
 }
-

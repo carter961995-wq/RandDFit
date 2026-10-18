@@ -1,33 +1,65 @@
-//
-//  UserSettings.swift
-//  RandDFit
-//
-//  Created by Logan Carter on 1/9/26.
-//
-
 import Combine
 import Foundation
-import SwiftUI
 
+@MainActor
 final class UserSettings: ObservableObject {
-    @AppStorage("hasOnboarded") var hasOnboarded: Bool = false
+    private let defaults: UserDefaults
 
-    @AppStorage("difficultyCSV") private var difficultyCSV: String = "easy,moderate"
-    @AppStorage("promptsPerDay") var promptsPerDay: Int = 4
-    @AppStorage("startHour") var startHour: Int = 6
-    @AppStorage("endHour") var endHour: Int = 19
-    @AppStorage("beginnerFriendly") var beginnerFriendly: Bool = true
+    @Published var hasOnboarded: Bool {
+        didSet { defaults.set(hasOnboarded, forKey: "hasOnboarded") }
+    }
+
+    @Published private var difficultyCSV: String {
+        didSet { defaults.set(difficultyCSV, forKey: "difficultyCSV") }
+    }
+
+    @Published var promptsPerDay: Int {
+        didSet { defaults.set(promptsPerDay, forKey: "promptsPerDay") }
+    }
+
+    @Published var startHour: Int {
+        didSet { defaults.set(startHour, forKey: "startHour") }
+    }
+
+    @Published var endHour: Int {
+        didSet { defaults.set(endHour, forKey: "endHour") }
+    }
+
+    @Published var beginnerFriendly: Bool {
+        didSet { defaults.set(beginnerFriendly, forKey: "beginnerFriendly") }
+    }
 
     var allowedDifficulties: Set<Difficulty> {
         get {
-            let parts = difficultyCSV.split(separator: ",").map { String($0) }
-            let diffs = parts.compactMap { Difficulty(rawValue: $0) }
-            return Set(diffs.isEmpty ? Difficulty.allCases : diffs)
+            Set(difficultyCSV.split(separator: ",").compactMap {
+                Difficulty(rawValue: String($0))
+            })
         }
         set {
-            let csv = newValue.map { $0.rawValue }.sorted().joined(separator: ",")
-            difficultyCSV = csv.isEmpty ? "easy,moderate,hard" : csv
+            // Keep the user's last choice instead of unexpectedly enabling harder workouts.
+            guard !newValue.isEmpty else { return }
+            difficultyCSV = newValue.map(\.rawValue).sorted().joined(separator: ",")
         }
     }
-}
 
+    init(defaults: UserDefaults = .standard) {
+        self.defaults = defaults
+        hasOnboarded = defaults.bool(forKey: "hasOnboarded")
+
+        let storedCSV = defaults.string(forKey: "difficultyCSV") ?? "easy,moderate"
+        let difficulties = Set(storedCSV.split(separator: ",").compactMap {
+            Difficulty(rawValue: String($0))
+        })
+        difficultyCSV = difficulties.isEmpty
+            ? Difficulty.easy.rawValue
+            : difficulties.map(\.rawValue).sorted().joined(separator: ",")
+
+        let storedPrompts = defaults.object(forKey: "promptsPerDay") as? Int ?? 4
+        let storedStart = defaults.object(forKey: "startHour") as? Int ?? 6
+        let storedEnd = defaults.object(forKey: "endHour") as? Int ?? 19
+        promptsPerDay = min(12, max(1, storedPrompts))
+        startHour = min(23, max(0, storedStart))
+        endHour = min(23, max(0, storedEnd))
+        beginnerFriendly = defaults.object(forKey: "beginnerFriendly") as? Bool ?? true
+    }
+}
