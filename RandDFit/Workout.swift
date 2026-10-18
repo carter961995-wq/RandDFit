@@ -1,5 +1,5 @@
 //
-//  workout.swift
+//  Workout.swift
 //  RandDFit
 //
 //  Created by Logan Carter on 1/9/26.
@@ -21,14 +21,17 @@ struct Workout: Identifiable, Codable, Equatable {
     let minutes: Int
     let difficulty: Difficulty
     let equipment: Equipment
+    let exerciseKind: ExerciseKind
     let steps: [String]
 
-    init(title: String, minutes: Int, difficulty: Difficulty, equipment: Equipment, steps: [String]) {
+    init(title: String, minutes: Int, difficulty: Difficulty, equipment: Equipment, exerciseKind: ExerciseKind, steps: [String]) {
         self.id = UUID()
         self.title = title
         self.minutes = minutes
         self.difficulty = difficulty
         self.equipment = equipment
+        self.exerciseKind = exerciseKind
         self.steps = steps
     }
 }
+
