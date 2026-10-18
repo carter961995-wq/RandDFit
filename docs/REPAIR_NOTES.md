@@ -27,12 +27,13 @@ The Xcode project includes a required-reason privacy manifest and a shared RandD
 - Default icon verified as 1024×1024 RGB; its appearance was inspected and compared to the original artwork composited onto its native gradient.
 - The build-and-test GitHub Actions workflow runs with read-only repository permissions on a standard macOS runner.
 - **Initial validation passed:** commit `40147ee16ccc034ed4e721a46bdb7be7ed272b24` built successfully on Xcode 26.6 (17F113), and all eight initial unit tests passed with zero failures. [Push run](https://github.com/carter961995-wq/RandDFit/actions/runs/39089854810) and [PR run](https://github.com/carter961995-wq/RandDFit/actions/runs/39089856106).
-- Follow-up validation for the clock-change fix and two new regression tests is pending.
+- **Final repair validation passed:** commit `dda9cfb104dd535a871c96973ec54c5595ffcebc` built successfully on Xcode 26.6 (17F113), and all ten unit tests passed with zero failures, including both clock-change regressions. [Push run](https://github.com/carter961995-wq/RandDFit/actions/runs/39096178239) and [PR run](https://github.com/carter961995-wq/RandDFit/actions/runs/39096179851).
+- **Repairs merged:** [PR #8](https://github.com/carter961995-wq/RandDFit/pull/8) is merged into the default `app-setup` branch at `6e7adf7dfbe189fd1c8248891222a664873d4371`.
 - Repository access was restored on October 17, 2026 (America/Chicago). The earlier connection allowlist blocker is resolved.
 - **GitHub Pages is disabled.** The prepared privacy/support files are not yet live, and the existing privacy URL remains broken.
 - **No App Store release was submitted.** Public Apple metadata confirms the production bundle ID and version; the exact shipped archive remains unverified. App Store Connect and on-device upgrade checks remain before release.
 
-The repairs use the exact GitHub baseline tree `c5aca32030344e62c26e0403473ea66c4bbd4be8`. Update these statuses after a real macOS build, Pages publication and release verification.
+The repairs use the exact GitHub baseline tree `c5aca32030344e62c26e0403473ea66c4bbd4be8`. Simulator build and unit-test validation are complete. Pages publication, Apple verification and signed-release checks remain pending.
 
 ## Remaining release checks
 

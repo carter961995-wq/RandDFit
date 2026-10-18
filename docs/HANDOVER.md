@@ -8,13 +8,15 @@ RanDoFit is a live free iPhone/iPad workout app. The seller reports very few dow
 
 The proposed RanDoFit scope consists of the app listing (subject to Apple's transfer criteria), the RanDoFit-specific source project, app artwork and seller-owned branding, and support/privacy page files. No personal Apple Developer account, personal GitHub account, unrelated Gate2Go code, unrelated domains or customer list is included.
 
-The repair baseline is `cursor/app-launch-setup-4188`, commit `d0ef338598c0980ce112417d1118a3539ee0b1e8`. It contains the workout application and icon bitmaps. The repository's original default branch contains a template. Record the final tested repair commit delivered to the buyer.
+The repair baseline is `cursor/app-launch-setup-4188`, commit `d0ef338598c0980ce112417d1118a3539ee0b1e8`. It contains the workout application and icon bitmaps. The default branch previously contained a template; [PR #8](https://github.com/carter961995-wq/RandDFit/pull/8) merged the repairs into `app-setup` at `6e7adf7dfbe189fd1c8248891222a664873d4371`. The tested repair head is `dda9cfb104dd535a871c96973ec54c5595ffcebc`: both the [push run](https://github.com/carter961995-wq/RandDFit/actions/runs/39096178239) and [PR run](https://github.com/carter961995-wq/RandDFit/actions/runs/39096179851) passed the simulator build and all ten unit tests on Xcode 26.6 (17F113), with zero failures.
 
 ## App identity and release checks
 
 Apple's public lookup metadata, retrieved October 18, 2026 UTC, confirms app ID `6757726061`, bundle ID `auto.RandDFit`, version `1.0`, minimum iOS `26.2`, seller Logan Matthew Carter and initial release on January 15, 2026. The bundle ID matches this project. The original default project also targeted iOS 26.2; the complete launch-source baseline selected for repairs targets iOS 16.
 
 The exact archive used for the live release has not been matched to this source snapshot. The repaired source is a separately validated development snapshot, not a claim about which commit Apple shipped. Before a signed update, confirm the current build number and capabilities in App Store Connect, preserve the production bundle ID, and test upgrading the installed App Store app. Test the proposed iOS 16 compatibility separately or retain the live release's higher minimum.
+
+No App Store release was submitted. The Flippa listing remains a draft; Apple ownership verification, the $29 listing checkout and GitHub Pages activation are pending.
 
 ## Technical contents
 
@@ -46,7 +48,7 @@ The seller is open to a separately negotiated combined acquisition with SafeRest
 - App Store Connect downloads with date range and territory.
 - Actual revenue/proceeds and expenses; zero revenue does not establish zero costs.
 - Latest build number and capabilities from App Store Connect, plus source/archive provenance where available. The public bundle ID and version are already confirmed.
-- Final macOS build/test result and an actual device walkthrough.
+- Actual device walkthrough and installed-app upgrade checks; the simulator build and ten-test results are recorded above.
 - Pages enabled and both public URLs responding successfully.
 - Buyer/seller Apple transfer eligibility at closing.
 

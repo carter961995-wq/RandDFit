@@ -22,20 +22,19 @@ Source: https://flippa.com/pricing
 
 ## Remaining work
 
-Repository access has been restored. The remaining steps are:
+Repository access has been restored, and [PR #8](https://github.com/carter961995-wq/RandDFit/pull/8) is merged into `app-setup` at `6e7adf7dfbe189fd1c8248891222a664873d4371`. Tested head `dda9cfb104dd535a871c96973ec54c5595ffcebc` passed the simulator build and all ten unit tests on Xcode 26.6 in both [push](https://github.com/carter961995-wq/RandDFit/actions/runs/39096178239) and [PR](https://github.com/carter961995-wq/RandDFit/actions/runs/39096179851) validation. No App Store release was submitted. The remaining steps are:
 
-1. Finish the final clock-change regression run and merge the repairs; the initial simulator build and eight tests already passed.
-2. Enable GitHub Pages and verify the public privacy/support URLs.
-3. Complete the App Store Connect ownership-code check. Public Apple metadata already confirms the bundle ID and version; disclose that the exact shipped archive remains unverified.
-4. Review the final listing, approve the $29 listing charge and the displayed seller agreement, and provide payment/billing details securely at checkout.
+1. Enable GitHub Pages and verify the public privacy/support URLs.
+2. Complete the App Store Connect ownership-code check. Public Apple metadata already confirms the bundle ID and version; disclose that the exact shipped archive remains unverified.
+3. Review the final listing, approve the $29 listing charge and the displayed seller agreement, and provide payment/billing details securely at checkout.
 
-Flippa requires original apps with all necessary source code. The source/build check should be resolved before the seller represents the asset as ready for transfer.
+Flippa requires original apps with all necessary source code. The repaired source now passes simulator build and unit tests; Apple ownership/transfer checks and signed-release verification remain separate.
 
 ## Saved listing text
 
 **Summary:** Live iOS workout app with SwiftUI source, exercise illustrations and local reminders. Pre-revenue asset; offers welcome. Optional SafeRestore bundle.
 
-The saved full description describes the app's local workout/reminder features, included source and artwork, zero revenue and low downloads, completed local repairs, remaining source/build and Pages checks, a negotiable $1,499 asking price, and the optional separately priced SafeRestore package. It makes no claim of existing monetization, verified retention or guaranteed earnings.
+The updated full description was saved and verified in the Flippa preview. It covers the app's local workout/reminder features, included source and artwork, zero revenue and low downloads, a negotiable $1,499 asking price, and the optional separately priced SafeRestore package. It records the completed repair merge and successful simulator build/ten-test validation, confirms that no App Store release was submitted, and discloses the unmatched original archive and untested proposed iOS 16 compatibility. Apple verification and Pages activation remain pending. It makes no claim of existing monetization, verified retention or guaranteed earnings.
 
 ## Continuation links
 

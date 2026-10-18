@@ -23,7 +23,7 @@ This source targets iOS 16 and later. Apple's public metadata confirms the live 
 
 ## Validation
 
-The `iOS validation` GitHub Actions workflow builds the shared scheme and runs focused unit tests on a standard macOS runner. The initial repair commit passed its simulator build and all eight initial tests on Xcode 26.6. Follow-up validation covers two additional clock-change regressions; see [repair notes](docs/REPAIR_NOTES.md) for actual run results. CI does not sign, upload or submit an App Store release.
+The repairs were merged into the default `app-setup` branch in [PR #8](https://github.com/carter961995-wq/RandDFit/pull/8), merge commit `6e7adf7dfbe189fd1c8248891222a664873d4371`. The tested repair head `dda9cfb104dd535a871c96973ec54c5595ffcebc` passed its simulator build and all ten unit tests, including both clock-change regressions, in both GitHub Actions runs on Xcode 26.6. See [repair notes](docs/REPAIR_NOTES.md) for run links. No App Store release was submitted; CI does not sign, upload or submit releases.
 
 ```sh
 xcodebuild -project RandDFit.xcodeproj -scheme RandDFit -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO build
