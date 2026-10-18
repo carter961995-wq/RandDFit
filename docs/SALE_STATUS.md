@@ -9,9 +9,10 @@
 - Scope: app transfer subject to Apple requirements, RanDoFit source/artwork/branding, privacy/support files and handover documentation.
 - Description includes an optional SafeRestore bundle, with separate scope and price. SafeRestore is not included in the $1,499 price.
 - No fixed post-sale support commitment was selected; any transition support is to be negotiated.
-- The summary and full description were saved and the pricing step completed. The basic Entry package was selected for review, but its completion was not verified because the browser connection stopped responding.
+- The summary and full description were saved and the pricing step completed. The basic Entry package selection is saved, and checkout displays a total of $29. No optional extras are selected.
+- Flippa requires an ownership code to be added to the app's promotional text or copyright field in App Store Connect, then checked with Verify Now. This is pending Apple sign-in.
 
-**The listing has not been confirmed published. No payment or ownership transfer was made.**
+**The listing remains a draft. No payment or ownership transfer was made.**
 
 ## Fees observed
 
@@ -23,10 +24,10 @@ Source: https://flippa.com/pricing
 
 Repository access has been restored. The remaining steps are:
 
-1. Push the repair branch and run the included macOS build/test workflow.
-2. Match the source to the production App Store archive and confirm the production bundle ID/current version.
-3. Enable GitHub Pages and verify the public privacy/support URLs.
-4. Review the final listing and any ownership-verification step, then approve the exact listing charge when checkout is available.
+1. Finish the final clock-change regression run and merge the repairs; the initial simulator build and eight tests already passed.
+2. Enable GitHub Pages and verify the public privacy/support URLs.
+3. Complete the App Store Connect ownership-code check. Public Apple metadata already confirms the bundle ID and version; disclose that the exact shipped archive remains unverified.
+4. Review the final listing, approve the $29 listing charge and the displayed seller agreement, and provide payment/billing details securely at checkout.
 
 Flippa requires original apps with all necessary source code. The source/build check should be resolved before the seller represents the asset as ready for transfer.
 
@@ -40,5 +41,8 @@ The saved full description describes the app's local workout/reminder features, 
 
 - Saved description editor: https://flippa.com/ob/listing_description/14528677/edit#listingDescription
 - Saved pricing editor: https://flippa.com/ob/pricing/14528677/edit
-- GitHub repository: https://github.com/carter961995-wq/RandDFit
+- Saved preview: https://flippa.com/14528677-randofit
+- Ownership verification: https://flippa.com/ob/app_verification/14528677/edit#appVerification
+- Checkout: https://flippa.com/ob/checkout/14528677
+- Repair pull request: https://github.com/carter961995-wq/RandDFit/pull/8
 - App Store Connect: https://appstoreconnect.apple.com/

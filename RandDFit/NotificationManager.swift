@@ -58,21 +58,33 @@ enum ReminderSchedulePlanner {
         let today = calendar.startOfDay(for: now)
 
         for dayOffset in 0..<days {
-            guard let day = calendar.date(byAdding: .day, value: dayOffset, to: today),
-                  let windowStart = calendar.date(bySettingHour: startHour, minute: 0, second: 0, of: day),
-                  let windowEnd = calendar.date(bySettingHour: endHour, minute: 0, second: 0, of: day),
-                  windowEnd > windowStart else { continue }
+            guard let day = calendar.date(byAdding: .day, value: dayOffset, to: today) else { continue }
 
-            // Start at the next future minute, so past slots do not consume today's allowance.
-            let elapsedMinutes = max(0, Int(floor(now.timeIntervalSince(windowStart) / 60)) + 1)
-            let firstMinute = windowStart.addingTimeInterval(TimeInterval(elapsedMinutes * 60))
-            let availableMinutes = max(0, Int(windowEnd.timeIntervalSince(firstMinute) / 60))
-            guard availableMinutes > 0 else { continue }
+            // Calendar triggers contain local clock components, so use each minute only once.
+            // Choosing the first repeated time avoids a future date whose trigger resolves to
+            // the already-past first occurrence. Strict matching also skips nonexistent minutes.
+            let candidates = ((startHour * 60)..<(endHour * 60)).compactMap { clockMinute -> Date? in
+                let hour = clockMinute / 60
+                let minute = clockMinute % 60
+                guard let candidate = calendar.date(
+                    bySettingHour: hour,
+                    minute: minute,
+                    second: 0,
+                    of: day,
+                    matchingPolicy: .strict,
+                    repeatedTimePolicy: .first,
+                    direction: .forward
+                ),
+                calendar.isDate(candidate, inSameDayAs: day),
+                calendar.component(.hour, from: candidate) == hour,
+                calendar.component(.minute, from: candidate) == minute,
+                candidate > now else { return nil }
+                return candidate
+            }
 
-            let dailyTimes = (0..<availableMinutes)
+            let dailyTimes = candidates
                 .shuffled()
                 .prefix(promptsPerDay)
-                .map { firstMinute.addingTimeInterval(TimeInterval($0 * 60)) }
                 .sorted()
             let remainingCapacity = maximumPendingRequests - dates.count
             dates.append(contentsOf: dailyTimes.prefix(remainingCapacity))

@@ -101,6 +101,48 @@ final class RandDFitTests: XCTestCase {
     }
 
     @MainActor
+    func testRepeatedHourUsesOnlyFutureFirstOccurrences() async throws {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = try XCTUnwrap(TimeZone(identifier: "America/Chicago"))
+        let formatter = ISO8601DateFormatter()
+        // 01:58:30 CDT, just before the clock repeats 01:00–01:59 in CST.
+        let now = try XCTUnwrap(formatter.date(from: "2026-11-01T06:58:30Z"))
+        let lastUnambiguousMinute = try XCTUnwrap(formatter.date(from: "2026-11-01T06:59:00Z"))
+
+        let dates = try ReminderSchedulePlanner.dates(
+            days: 1,
+            promptsPerDay: 12,
+            startHour: 1,
+            endHour: 2,
+            now: now,
+            calendar: calendar
+        )
+
+        XCTAssertEqual(dates, [lastUnambiguousMinute])
+    }
+
+    @MainActor
+    func testRepeatedHourDoesNotReusePastFirstOccurrences() async throws {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = try XCTUnwrap(TimeZone(identifier: "America/Chicago"))
+        // 01:20 CST: every first occurrence of 01:00–01:59 has already passed.
+        let now = try XCTUnwrap(ISO8601DateFormatter().date(from: "2026-11-01T07:20:00Z"))
+
+        XCTAssertThrowsError(try ReminderSchedulePlanner.dates(
+            days: 1,
+            promptsPerDay: 12,
+            startHour: 1,
+            endHour: 2,
+            now: now,
+            calendar: calendar
+        )) { error in
+            guard case ReminderScheduleError.noFutureTimes = error else {
+                return XCTFail("Expected no future canonical local times, got \(error).")
+            }
+        }
+    }
+
+    @MainActor
     func testInvalidReminderSettingsAreRejected() async {
         XCTAssertThrowsError(try ReminderSchedulePlanner.dates(
             promptsPerDay: 4, startHour: 19, endHour: 6

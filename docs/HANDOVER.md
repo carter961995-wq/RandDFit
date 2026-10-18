@@ -10,11 +10,11 @@ The proposed RanDoFit scope consists of the app listing (subject to Apple's tran
 
 The repair baseline is `cursor/app-launch-setup-4188`, commit `d0ef338598c0980ce112417d1118a3539ee0b1e8`. It contains the workout application and icon bitmaps. The repository's original default branch contains a template. Record the final tested repair commit delivered to the buyer.
 
-## Required production-source check
+## App identity and release checks
 
-The inspected source targets iOS 16 and uses `auto.RandDFit` as its configured bundle identifier. The current public App Store listing requires iOS 26.2. The exact Xcode archive/source used for the live release has not been located or matched to this snapshot.
+Apple's public lookup metadata, retrieved October 18, 2026 UTC, confirms app ID `6757726061`, bundle ID `auto.RandDFit`, version `1.0`, minimum iOS `26.2`, seller Logan Matthew Carter and initial release on January 15, 2026. The bundle ID matches this project. The original default project also targeted iOS 26.2; the complete launch-source baseline selected for repairs targets iOS 16.
 
-Open App Store Connect and the original Xcode project/archive to confirm the production bundle ID, current version/build, capabilities and source. Preserve the production bundle ID. Do not submit an update or represent this repaired branch as the exact shipped source until this check is complete.
+The exact archive used for the live release has not been matched to this source snapshot. The repaired source is a separately validated development snapshot, not a claim about which commit Apple shipped. Before a signed update, confirm the current build number and capabilities in App Store Connect, preserve the production bundle ID, and test upgrading the installed App Store app. Test the proposed iOS 16 compatibility separately or retain the live release's higher minimum.
 
 ## Technical contents
 
@@ -45,7 +45,7 @@ The seller is open to a separately negotiated combined acquisition with SafeRest
 
 - App Store Connect downloads with date range and territory.
 - Actual revenue/proceeds and expenses; zero revenue does not establish zero costs.
-- Production bundle ID, latest version/build, capabilities and matched source/archive.
+- Latest build number and capabilities from App Store Connect, plus source/archive provenance where available. The public bundle ID and version are already confirmed.
 - Final macOS build/test result and an actual device walkthrough.
 - Pages enabled and both public URLs responding successfully.
 - Buyer/seller Apple transfer eligibility at closing.
@@ -53,6 +53,7 @@ The seller is open to a separately negotiated combined acquisition with SafeRest
 ## Primary references
 
 - [Live listing](https://apps.apple.com/us/app/randofit/id6757726061)
+- [Apple public app metadata](https://itunes.apple.com/lookup?id=6757726061&country=us)
 - [Apple transfer overview](https://developer.apple.com/help/app-store-connect/transfer-an-app/overview-of-app-transfer)
 - [Apple transfer criteria](https://developer.apple.com/help/app-store-connect/transfer-an-app/app-transfer-criteria)
 - [Flippa eligible app rules](https://support.flippa.com/hc/en-us/articles/360000682816-What-apps-can-be-sold-on-Flippa)

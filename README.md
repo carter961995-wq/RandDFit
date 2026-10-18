@@ -11,7 +11,7 @@ RanDoFit is a SwiftUI fitness app that generates short bodyweight workout prompt
 3. Build and run. Simulator builds do not need a signing identity.
 4. For a physical device, choose your own development team. For an App Store update, first confirm the existing production bundle ID and signing configuration.
 
-This snapshot targets iOS 16 and later. The live listing currently requires iOS 26.2 and later. The repository snapshot has **not yet been matched to the archive used for the live release**.
+This source targets iOS 16 and later. Apple's public metadata confirms the live app is version 1.0, bundle ID `auto.RandDFit`, with an iOS 26.2 minimum. The source's broader compatibility target is a proposed change; it has not been released or verified on iOS 16. The exact archive used for the live release has not been matched to this source snapshot.
 
 ## Features in this source
 
@@ -23,7 +23,7 @@ This snapshot targets iOS 16 and later. The live listing currently requires iOS 
 
 ## Validation
 
-The `iOS validation` GitHub Actions workflow builds the shared scheme and runs focused unit tests on a standard macOS runner. It does not sign, upload or submit an App Store release. Read the actual run result; the workflow file alone is not evidence of a successful build.
+The `iOS validation` GitHub Actions workflow builds the shared scheme and runs focused unit tests on a standard macOS runner. The initial repair commit passed its simulator build and all eight initial tests on Xcode 26.6. Follow-up validation covers two additional clock-change regressions; see [repair notes](docs/REPAIR_NOTES.md) for actual run results. CI does not sign, upload or submit an App Store release.
 
 ```sh
 xcodebuild -project RandDFit.xcodeproj -scheme RandDFit -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO build
