@@ -1,0 +1,25 @@
+workflows:
+  ios-release:
+    name: RanDoFit App Store build
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+    integrations:
+      app_store_connect: SafeRestore
+    environment:
+      xcode: 26.6
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: auto.RandDFit
+    scripts:
+      - name: Apply App Store signing profiles
+        script: xcode-project use-profiles
+      - name: Build signed archive and IPA
+        script: xcode-project build-ipa --project "$CM_BUILD_DIR/RandDFit.xcodeproj" --scheme RandDFit
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: false
+        submit_to_app_store: false
